@@ -1,0 +1,47 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+# Azure resource group deployment
+# Deploy an Azure Resource Manager (ARM) template to a resource group and manage virtual machines
+- task: AzureResourceGroupDeployment@2
+  inputs:
+    azureSubscription: 
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'SiteRecoveryRG'
+    location: 'westeurope'
+    #templateLocation: 'Linked artifact' # Options: linked Artifact, uRL Of The File
+    #csmFileLink: # Required when templateLocation == URL Of The File
+    #csmParametersFileLink: # Optional
+    #csmFile: # Required when  TemplateLocation == Linked Artifact
+    #csmParametersFile: # Optional
+    #overrideParameters: # Optional
+    deploymentMode: 'Incremental'
+    #enableDeploymentPrerequisites: 'None' # Optional. Options: none, configureVMwithWinRM, configureVMWithDGAgent
+    #teamServicesConnection: # Required when enableDeploymentPrerequisites == ConfigureVMWithDGAgent
+    #teamProject: # Required when enableDeploymentPrerequisites == ConfigureVMWithDGAgent
+    #deploymentGroupName: # Required when enableDeploymentPrerequisites == ConfigureVMWithDGAgent
+    copyAzureVMTags: true
+    #runAgentServiceAsUser: # Optional
+    #userName: # Required when enableDeploymentPrerequisites == ConfigureVMWithDGAgent && RunAgentServiceAsUser == True
+    #password: # Optional
+    #outputVariable: # Optional
+    deploymentName: rgdeploy
+    #deploymentOutputs: # Optional
+    #addSpnToEnvironment: false # Optional
