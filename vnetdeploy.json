@@ -1,0 +1,66 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+		"resourceTags": {
+        	"type": "object",
+        	"defaultValue": {
+            	"Environment": "Dev",
+            	"Service": "ASR"
+        }
+    }
+    },
+    "variables": {
+        "VirtualNetwork-ASRPrefix": "172.30.0.0/16",
+        "VirtualNetwork-ASRSubnet1Name": "BackOffice",
+        "VirtualNetwork-ASRSubnet1Prefix": "172.30.116.0/24",
+        "VirtualNetwork-ASRSubnet2Name": "DmzInternal",
+        "VirtualNetwork-ASRSubnet2Prefix": "172.30.175.0/24",
+        "VirtualNetwork-ASRSubnet3Name": "DmzExternal",
+        "VirtualNetwork-ASRSubnet3Prefix": "172.30.174.0/24"
+    },
+    "resources": [
+        {
+            "name": "VirtualNetwork-ASR",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "[parameters('location')]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [],
+			"tags": "[parameters('resourceTags')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('VirtualNetwork-ASRPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('VirtualNetwork-ASRSubnet1Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('VirtualNetwork-ASRSubnet1Prefix')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('VirtualNetwork-ASRSubnet2Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('VirtualNetwork-ASRSubnet2Prefix')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('VirtualNetwork-ASRSubnet3Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('VirtualNetwork-ASRSubnet3Prefix')]"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
