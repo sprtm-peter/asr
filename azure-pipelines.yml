@@ -10,16 +10,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
-# Azure resource group deployment
-# Deploy an Azure Resource Manager (ARM) template to a resource group and manage virtual machines
 - task: AzureResourceGroupDeployment@2
   inputs:
     azureSubscription: 'Pay-As-You-Go(0c2b55a9-0517-454e-ba9d-25ddf1775832)' 
